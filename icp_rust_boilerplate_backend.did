@@ -1,0 +1,16 @@
+type Error = variant { NotFound : record { msg : text } };
+type Result = variant { Ok : Transaction; Err : Error };
+type Transaction = record {
+  id : nat64;
+  status : text;
+  created_at : nat64;
+  phone_number : text;
+  amount : nat32;
+};
+type TransactionPayload = record { phone_number : text; amount : nat32 };
+service : {
+  create_transaction : (TransactionPayload) -> (opt Transaction);
+  delete_transaction : (nat64) -> (Result);
+  get_transaction : (nat64) -> (Result) query;
+  update_transaction_status : (nat64, text) -> (Result);
+}
